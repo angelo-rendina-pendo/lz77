@@ -22,7 +22,7 @@ fn find_code(window: &str, lookahead: &str) -> Code {
         literal: lookahead_chars.next().unwrap(),
     };
     let mut search_length: usize = 1;
-    while search_length <= lookahead.len() {
+    while search_length < lookahead.len() {
         let search = &lookahead[..search_length];
         let rightmost_match = window.rfind(search);
         if rightmost_match == None {
@@ -30,10 +30,7 @@ fn find_code(window: &str, lookahead: &str) -> Code {
         }
         code.offset = window.len() - rightmost_match.unwrap();
         code.length = search_length;
-        match lookahead_chars.next() {
-            None => { code.literal = '\0'; },
-            Some(character) => { code.literal = character },
-        }
+        code.literal = lookahead_chars.next().unwrap();
         search_length += 1;
     }
     return code;
@@ -61,9 +58,9 @@ mod find_code {
         let lookahead = "a";
         let window = "a";
         let expected_code = Code {
-            offset: 1,
-            length: 1,
-            literal: '\0',
+            offset: 0,
+            length: 0,
+            literal: 'a',
         };
         let found_code = find_code(window, lookahead);
         assert_eq!(found_code, expected_code);
@@ -101,8 +98,8 @@ mod find_code {
         let window = "ababcabc";
         let expected_code = Code {
             offset: 3,
-            length: 3,
-            literal: '\0',
+            length: 2,
+            literal: 'c',
         };
         let found_code = find_code(window, lookahead);
         assert_eq!(found_code, expected_code);
@@ -137,7 +134,7 @@ mod encode {
             Code { offset: 0, length: 0, literal: 'b' },
             Code { offset: 0, length: 0, literal: 'c' },
             Code { offset: 3, length: 2, literal: 'a' },
-            Code { offset: 5, length: 2, literal: '\0' },
+            Code { offset: 2, length: 1, literal: 'c' },
         ];
         let found_encoding = encode(input, max_window_length);
         assert_eq!(found_encoding, expected_encoding);

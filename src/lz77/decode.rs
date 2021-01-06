@@ -15,10 +15,8 @@ pub fn decode(encoded: &Vec<Code>) -> String {
             decoded.push_str(segment);
             position += code.length;
         }
-        if code.literal != '\0' {
-            decoded.push(code.literal);
-            position += 1;
-        }
+        decoded.push(code.literal);
+        position += 1;
     }
     return decoded;
 }

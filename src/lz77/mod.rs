@@ -1,9 +1,10 @@
 pub mod encode;
 pub mod decode;
 
+#[repr(C)]
 #[derive(Debug, PartialEq)]
-pub struct Code<T> {
-    offset: usize,
-    length: usize,
+pub struct Code<T, U> {
+    offset: U,
+    length: U,
     literal: T,
 }

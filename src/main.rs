@@ -1,4 +1,5 @@
 mod lz77;
+mod io;
 
 fn main() {
     let input = "12341234abcabcabcabcXXXXXXXXXXXXX";

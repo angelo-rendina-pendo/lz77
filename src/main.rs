@@ -10,7 +10,7 @@ fn main() {
         let input = io::stdin::file_bytes(filename);
         let encoded = lz77::encode::encode::<u8, u8>(&input);
         println!("File is {} bytes long.", input.len());
-        println!("Encoding size: {} bytes.", std::mem::size_of::<lz77::Code<u8, u8>>() * encoded.len());
+        println!("Encoding size: {} bytes.", lz77::Code::<u8, u8>::mem_size() * encoded.len());
     } else {
         let input = "12341234abcabcabcabcXXXXXXXXXXXXX";
         let encoded = lz77::encode::from_string::<u8>(&input);
@@ -22,6 +22,6 @@ fn main() {
         println!("{} is obtained by encoding and decoding.", &decoded);
         println!("Input has {} characters, encoded in {} codes.", input.len(), encoded.len());
         println!("Input size: {} bytes.", std::mem::size_of_val(input));
-        println!("Encoding size: {} bytes.", std::mem::size_of::<lz77::Code<char, u8>>() * encoded.len());
+        println!("Encoding size: {} bytes.", lz77::Code::<char, u8>::mem_size() * encoded.len());
     }
 }

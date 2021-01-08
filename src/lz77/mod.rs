@@ -4,9 +4,9 @@ pub mod decode;
 #[repr(C)]
 #[derive(Debug, PartialEq)]
 pub struct Code<T, U> {
-    offset: U,
-    length: U,
-    literal: T,
+    pub offset: U,
+    pub length: U,
+    pub literal: T,
 }
 
 impl<T, U> Code<T, U> {

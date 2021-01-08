@@ -44,5 +44,5 @@ function writeOutput(line) {
             return;
         }
     }
-    writeOutput('Done!');
+    writeOutput('Content matches!');
 })();

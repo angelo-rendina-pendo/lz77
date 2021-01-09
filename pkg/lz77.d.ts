@@ -4,15 +4,35 @@
 */
 export function run(): void;
 /**
-* @param {Uint8Array} bytes
+* @param {Uint8Array} symbols
 * @returns {Data}
 */
-export function encode(bytes: Uint8Array): Data;
+export function encode_8(symbols: Uint8Array): Data;
 /**
-* @param {Uint8Array} bytes
+* @param {Uint16Array} symbols
 * @returns {Data}
 */
-export function decode(bytes: Uint8Array): Data;
+export function encode_16(symbols: Uint16Array): Data;
+/**
+* @param {Uint32Array} symbols
+* @returns {Data}
+*/
+export function encode_32(symbols: Uint32Array): Data;
+/**
+* @param {Uint8Array} symbols
+* @returns {Data}
+*/
+export function decode_8(symbols: Uint8Array): Data;
+/**
+* @param {Uint16Array} symbols
+* @returns {Data}
+*/
+export function decode_16(symbols: Uint16Array): Data;
+/**
+* @param {Uint32Array} symbols
+* @returns {Data}
+*/
+export function decode_32(symbols: Uint32Array): Data;
 /**
 */
 export class Data {
@@ -37,8 +57,12 @@ export interface InitOutput {
   readonly __wbg_set_data_address: (a: number, b: number) => void;
   readonly __wbg_get_data_length: (a: number) => number;
   readonly __wbg_set_data_length: (a: number, b: number) => void;
-  readonly encode: (a: number, b: number) => number;
-  readonly decode: (a: number, b: number) => number;
+  readonly encode_8: (a: number, b: number) => number;
+  readonly encode_16: (a: number, b: number) => number;
+  readonly encode_32: (a: number, b: number) => number;
+  readonly decode_8: (a: number, b: number) => number;
+  readonly decode_16: (a: number, b: number) => number;
+  readonly decode_32: (a: number, b: number) => number;
   readonly __wbindgen_malloc: (a: number) => number;
   readonly __wbindgen_start: () => void;
 }

@@ -37,12 +37,12 @@ function findCode(window, lookahead) {
     return code;
 }
 
-function encode(input) {
+function encode(input, windowSize) {
     const encoded = [];
     let position = 0;
     while (position < input.length) {
         const lookahead = input.slice(position);
-        const windowStart = Math.max(position - 255, 0);
+        const windowStart = Math.max(position - windowSize + 1, 0);
         const window = input.slice(windowStart, position);
         const code = findCode(window, lookahead);
         position += code.length + 1;
@@ -51,9 +51,9 @@ function encode(input) {
     return encoded;
 }
 
-function encodingToBytes(encoded) {
-    return encoded.reduce((bytes, code) => {
-        return bytes.concat([
+function encodingToArray(encoded) {
+    return encoded.reduce((array, code) => {
+        return array.concat([
             code.offset,
             code.length,
             code.literal
@@ -61,7 +61,17 @@ function encodingToBytes(encoded) {
     }, []);
 }
 
-export function jsEncode(input) {
-    const encoded = encode(input);
-    return new Uint8Array(encodingToBytes(encoded));
+export function jsEncode(input, bits) {
+    let encoded;
+    switch (bits) {
+        case 8:
+            encoded = encode(input, 1 << 8);
+            return new Uint8Array(encodingToArray(encoded));
+        case 16:
+            encoded = encode(input, 1 << 16);
+            return new Uint16Array(encodingToArray(encoded));
+        case 32:
+            encoded = encode(input, Number.MAX_SAFE_INTEGER);
+            return new Uint32Array(encodingToArray(encoded));
+    }
 }

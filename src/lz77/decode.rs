@@ -1,26 +1,27 @@
 use super::Code;
+use std::convert::{TryInto};
 
 pub fn to_string<U>(encoded: &[Code<char, U>]) -> String
-where U: Into<usize> + Copy {
+where U: TryInto<usize> + Copy {
     let decoded = decode::<char, U>(encoded);
     return decoded.into_iter().collect();
 }
 
 pub fn decode<T, U>(encoded: &[Code<T, U>]) -> Vec<T>
-where T: Copy, U: Into<usize> + Copy {
+where T: Copy, U: TryInto<usize> + Copy {
     let mut capacity: usize = 0;
     for code in encoded.iter() {
-        capacity += code.length.into() + 1;
+        capacity += code.length.try_into().ok().unwrap() + 1;
     }
     let mut decoded = Vec::<T>::with_capacity(capacity);
     let mut position: usize = 0;
     for code in encoded.iter() {
-        if code.length.into() > 0 {
-            let segment_start = position - code.offset.into();
-            let segment_end = segment_start + code.length.into();
+        if code.length.try_into().ok().unwrap() > 0 {
+            let segment_start = position - code.offset.try_into().ok().unwrap();
+            let segment_end = segment_start + code.length.try_into().ok().unwrap();
             let segment = &mut decoded[segment_start..segment_end].to_owned();
             decoded.append(segment);
-            position += code.length.into();
+            position += code.length.try_into().ok().unwrap();
         }
         decoded.push(code.literal);
         position += 1;

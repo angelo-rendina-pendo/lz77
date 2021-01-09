@@ -31,24 +31,96 @@ function passArray8ToWasm0(arg, malloc) {
     return ptr;
 }
 /**
-* @param {Uint8Array} bytes
+* @param {Uint8Array} symbols
 * @returns {Data}
 */
-export function encode(bytes) {
-    var ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
+export function encode_8(symbols) {
+    var ptr0 = passArray8ToWasm0(symbols, wasm.__wbindgen_malloc);
     var len0 = WASM_VECTOR_LEN;
-    var ret = wasm.encode(ptr0, len0);
+    var ret = wasm.encode_8(ptr0, len0);
+    return Data.__wrap(ret);
+}
+
+let cachegetUint16Memory0 = null;
+function getUint16Memory0() {
+    if (cachegetUint16Memory0 === null || cachegetUint16Memory0.buffer !== wasm.memory.buffer) {
+        cachegetUint16Memory0 = new Uint16Array(wasm.memory.buffer);
+    }
+    return cachegetUint16Memory0;
+}
+
+function passArray16ToWasm0(arg, malloc) {
+    const ptr = malloc(arg.length * 2);
+    getUint16Memory0().set(arg, ptr / 2);
+    WASM_VECTOR_LEN = arg.length;
+    return ptr;
+}
+/**
+* @param {Uint16Array} symbols
+* @returns {Data}
+*/
+export function encode_16(symbols) {
+    var ptr0 = passArray16ToWasm0(symbols, wasm.__wbindgen_malloc);
+    var len0 = WASM_VECTOR_LEN;
+    var ret = wasm.encode_16(ptr0, len0);
+    return Data.__wrap(ret);
+}
+
+let cachegetUint32Memory0 = null;
+function getUint32Memory0() {
+    if (cachegetUint32Memory0 === null || cachegetUint32Memory0.buffer !== wasm.memory.buffer) {
+        cachegetUint32Memory0 = new Uint32Array(wasm.memory.buffer);
+    }
+    return cachegetUint32Memory0;
+}
+
+function passArray32ToWasm0(arg, malloc) {
+    const ptr = malloc(arg.length * 4);
+    getUint32Memory0().set(arg, ptr / 4);
+    WASM_VECTOR_LEN = arg.length;
+    return ptr;
+}
+/**
+* @param {Uint32Array} symbols
+* @returns {Data}
+*/
+export function encode_32(symbols) {
+    var ptr0 = passArray32ToWasm0(symbols, wasm.__wbindgen_malloc);
+    var len0 = WASM_VECTOR_LEN;
+    var ret = wasm.encode_32(ptr0, len0);
     return Data.__wrap(ret);
 }
 
 /**
-* @param {Uint8Array} bytes
+* @param {Uint8Array} symbols
 * @returns {Data}
 */
-export function decode(bytes) {
-    var ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
+export function decode_8(symbols) {
+    var ptr0 = passArray8ToWasm0(symbols, wasm.__wbindgen_malloc);
     var len0 = WASM_VECTOR_LEN;
-    var ret = wasm.decode(ptr0, len0);
+    var ret = wasm.decode_8(ptr0, len0);
+    return Data.__wrap(ret);
+}
+
+/**
+* @param {Uint16Array} symbols
+* @returns {Data}
+*/
+export function decode_16(symbols) {
+    var ptr0 = passArray16ToWasm0(symbols, wasm.__wbindgen_malloc);
+    var len0 = WASM_VECTOR_LEN;
+    var ret = wasm.decode_16(ptr0, len0);
+    return Data.__wrap(ret);
+}
+
+/**
+* @param {Uint32Array} symbols
+* @returns {Data}
+*/
+export function decode_32(symbols) {
+    var ptr0 = passArray32ToWasm0(symbols, wasm.__wbindgen_malloc);
+    var len0 = WASM_VECTOR_LEN;
+    var ret = wasm.decode_32(ptr0, len0);
     return Data.__wrap(ret);
 }
 
@@ -74,7 +146,7 @@ export class Data {
     */
     get address() {
         var ret = wasm.__wbg_get_data_address(this.ptr);
-        return ret;
+        return ret >>> 0;
     }
     /**
     * @param {number} arg0

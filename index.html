@@ -4,9 +4,18 @@
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
         <title>WASM LZ77</title>
-        <script type="module" src="./www/index.js"></script>
+        <style>
+            .wrapper { display: flex; }
+            .wrapper > div { margin-right: 32px; }
+        </style>
     </head>
     <body>
-        <div id="output"></div>
+        <div id="output0"></div>
+        <div class="wrapper">
+            <div id="output8"></div>
+            <div id="output16"></div>
+            <div id="output32"></div>
+        </div>
     </body>
+    <script type="module" src="./www/index.js"></script>
 </html>

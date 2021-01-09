@@ -1,23 +1,23 @@
 use super::Code;
 use num_traits::Bounded;
-use std::convert::TryFrom;
+use std::convert::{TryFrom, TryInto};
 
 pub fn from_string<U>(input: &str) -> Vec<Code<char, U>>
-where U: Into<usize> + TryFrom<usize> + Bounded + Copy {
+where U: TryInto<usize> + TryFrom<usize> + Bounded + Copy {
     let input_chars: Vec<char> = input.chars().collect();
     return encode::<char, U>(&input_chars);
 }
 
 pub fn encode<T, U>(input: &[T]) -> Vec<Code<T, U>>
-where T: Eq + Copy, U: Into<usize> + TryFrom<usize> + Bounded + Copy {
+where T: Eq + Copy, U: TryInto<usize> + TryFrom<usize> + Bounded + Copy {
     let mut encoded: Vec<Code<T, U>> = Vec::with_capacity(input.len());
     let mut position: usize = 0;
     while position < input.len() {
         let lookahead = &input[position..];
-        let window_start = position.saturating_sub(U::max_value().into());
+        let window_start = position.saturating_sub(U::max_value().try_into().ok().unwrap());
         let window = &input[window_start..position];
         let code: Code<T, U> = find_code(&window, &lookahead);
-        position += code.length.into() + 1;
+        position += code.length.try_into().ok().unwrap() + 1;
         encoded.push(code);
     }
     return encoded;
